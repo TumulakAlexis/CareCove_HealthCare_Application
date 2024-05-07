@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "13259386177",
+    "project_id": "carecove-db5df",
+    "storage_bucket": "carecove-db5df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13259386177:android:f2e2ec21680843f92f85c0",
+        "android_client_info": {
+          "package_name": "com.example.care_cove"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8k7n4qiZI6loXDdg0UFyoZP4IPP8HjkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
