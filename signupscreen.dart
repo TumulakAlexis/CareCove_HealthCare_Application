@@ -37,11 +37,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Column(
             children: [
               SizedBox(
-                height: 100,
+                height: 70,
               ),
               SizedBox(
-                width: 300,
-                height: 300,
+                width: 230,
+                height: 230,
                 child: Lottie.asset(
                   'assets/carecove.json',
                 ),

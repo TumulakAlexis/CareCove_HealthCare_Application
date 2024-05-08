@@ -25,12 +25,10 @@ class OnboardingScreen1 extends StatelessWidget {
               ),
             ),
           ),
+          
           SizedBox(
-            height: 30,
-          ),
-          SizedBox(
-            width: 50,
-            height: 225,
+            width: 250,
+            height: 200,
           ),
           Text(
             "Welcome to CareCove!",

@@ -71,7 +71,7 @@ class OnboardingScreen2 extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 180,
+              height: 80,
             ),
             ElevatedButton(
                 onPressed: () {

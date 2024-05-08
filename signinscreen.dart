@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -16,6 +17,32 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignIn> {
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<void> _signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount!.authentication;
+      
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      
+      final UserCredential userCredential = await _auth.signInWithCredential(credential);
+      final User? user = userCredential.user;
+      
+      // Navigate to the next screen after successful sign-in
+      if (user != null) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
+
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
@@ -62,8 +89,8 @@ class _SignUpState extends State<SignIn> {
                 height: 80,
               ),
               SizedBox(
-                width: 300,
-                height: 300,
+                width: 220,
+                height: 220,
                 child: Lottie.asset(
                   'assets/carecove.json',
                 ),
@@ -74,7 +101,7 @@ class _SignUpState extends State<SignIn> {
                     fontFamily: 'Fresh', fontSize: 40, color: Colors.brown),
               ),
               SizedBox(
-                height: 50,
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -199,12 +226,13 @@ class _SignUpState extends State<SignIn> {
               ),
               SizedBox(height: 20,),
               Text("Sign in using"),
-              GestureDetector(
-                onTap: (){},
+              MaterialButton(
+                onPressed: _signInWithGoogle,
                 child: Container(width: 50,
                 height: 50,
                 decoration: BoxDecoration(image: DecorationImage(image: NetworkImage('https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png'))),),
-              )
+              ),
+
             ],
           ),
         ),
