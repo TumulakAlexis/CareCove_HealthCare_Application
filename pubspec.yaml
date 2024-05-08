@@ -38,8 +38,9 @@ dependencies:
   lottie: ^3.1.0
   smooth_page_indicator: ^1.0.0+2
   firebase_core: any
-  firebase_auth: ^4.6.3
+  firebase_auth: any
   carousel_slider: any
+  google_sign_in: any
 
 dev_dependencies:
   flutter_test:

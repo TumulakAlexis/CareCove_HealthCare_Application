@@ -1,145 +1,148 @@
-import 'package:care_cove/screens/signupscreen.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<SignIn> createState() => _SignUpState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _SignUpState extends State<SignIn> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+class _HomeScreenState extends State<HomeScreen> {
+
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  // Function to fetch the user's profile picture
+  Future<String?> fetchProfilePicture() async {
+    try {
+      // Get the currently signed-in user
+      GoogleSignInAccount? user = _googleSignIn.currentUser;
+
+      // Check if the user is signed in
+      if (user != null) {
+        // Retrieve the user's profile picture URL
+        String? profilePictureUrl = user.photoUrl;
+        return profilePictureUrl;
+      } else {
+        // User is not signed in
+        return null;
+      }
+    } catch (error) {
+      print('Error fetching profile picture: $error');
+      return null;
+    }
+  }
+
+  Widget _buildProfilePicture() {
+    return FutureBuilder<String?>(
+      future: fetchProfilePicture(),
+      builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // While waiting for the profile picture to load
+          return CircularProgressIndicator(); // Or any other loading indicator
+        } else if (snapshot.hasError) {
+          // If an error occurred while fetching the profile picture
+          return Text('Error fetching profile picture');
+        } else if (snapshot.hasData) {
+          // If the profile picture URL is available
+          String? profilePictureUrl = snapshot.data;
+          return Image.network(profilePictureUrl ?? ''); // Display the profile picture
+        } else {
+          // No profile picture available (user not signed in)
+          return Text('User not signed in');
+        }
+      },
+    );
+  }
+
+
+  final assetImage = [
+    'assets/cough.jpg',
+    'assets/fever.jpg',
+    'assets/flu.jpg',
+    'assets/skin_infection.jpg',
+    'assets/uti.jpg'
+  ];
+
+   Widget buildImage(String assetImages, int index) => Container(
+      margin: EdgeInsetsDirectional.symmetric(horizontal: 5),
+      color: Colors.grey,
+      child: Image.asset(assetImages,
+      fit: BoxFit.cover,),
+    );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 150,
-              ),
-              SizedBox(
-                width: 300,
-                height: 300,
-                child: Lottie.asset(
-                  'assets/carecove.json',
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Container(
+                  height: 125,
+                  color: Colors.brown,
                 ),
-              ),
-              Text(
-                " CareCove",
+                Positioned(
+                  top: 60,
+                  left: 30,
+                child: Text("Hello!",
+                style: TextStyle(fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 18),)),
+                 Positioned(
+                  top: 79,
+                  left: 30,
+                child: Text("How can we help you?",
                 style: TextStyle(
-                    fontFamily: 'Fresh', fontSize: 40, color: Colors.brown),
+                color: Colors.white,
+                fontSize: 13),)),
+                Positioned(
+                  top: 40,
+                  left: 290,
+                  child: _buildProfilePicture(),
               ),
-              SizedBox(
-                height: 50,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Username",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.brown),
-                  ),
-                  SizedBox(
-                    width: 225,
-                  ),
-                ],
-              ),
-              Container(
+              ],
+            ),
+            SizedBox(height: 25,),
+            Container(
                   width: 300,
                   height: 50,
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.brown, width: 2.0),
                   ),
                   child: TextField(
-                      controller: _emailController,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.search),
+                        hintText: 'Search your topic',
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       ))),
-              SizedBox(
-                height: 25,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Password",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.brown),
-                  ),
-                  SizedBox(
-                    width: 225,
-                  ),
-                ],
-              ),
-              Container(
-                  width: 300,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.brown, width: 2.0)),
-                  child: TextField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    ),
-                    obscureText: true,
-                  )),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Forgot Password?",
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 170,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Don't Have an Account?"),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                       Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SignUpScreen()));
-                    },
-                    child: Text(
-                      "Sign Up",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.blue),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 75,
-                  ),
-                ],
-              )
-            ],
-          ),
+              SizedBox(height: 25,),
+            Row(
+              children: [
+                SizedBox(width: 20,),
+                Text("Explore Categories", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.brown, fontSize: 20),),
+              ],
+            ),
+            SizedBox(height: 20,),
+           CarouselSlider.builder(itemCount: assetImage.length, 
+           itemBuilder: ((context, index, realIndex) {
+             final assetImages = assetImage[index];
+
+             return buildImage(assetImages, index);
+           }), 
+           options: CarouselOptions(height: 300,
+           autoPlay: true,
+           autoPlayInterval: Duration(seconds: 4),
+
+           ) ),
+          ],
         ),
-      ),
+      )
     );
+
   }
 }

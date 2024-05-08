@@ -12,7 +12,12 @@
           "package_name": "com.example.care_cove"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "13259386177-7ufqebe5a4q2qk6rv57qeo6qb9phkvo5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB8k7n4qiZI6loXDdg0UFyoZP4IPP8HjkA"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "13259386177-7ufqebe5a4q2qk6rv57qeo6qb9phkvo5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "13259386177-dr6lc8flnb5mpekh9r16eermd9b76gpt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.careCove"
+              }
+            }
+          ]
         }
       }
     }
