@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "13259386177-n2gve8355leo2sa83a4esj4ugp1eln4u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.care_cove",
+            "certificate_hash": "28e4351c61c33587d148e09a602a601d554f3329"
+          }
+        },
+        {
           "client_id": "13259386177-7ufqebe5a4q2qk6rv57qeo6qb9phkvo5.apps.googleusercontent.com",
           "client_type": 3
         }
